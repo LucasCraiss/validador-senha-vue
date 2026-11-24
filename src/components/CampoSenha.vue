@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col gap-1">
-        <label :for="id" class="text-sm font-semibold text-gray-700 dark:text-slate-300">
+        <label :for="id" class="text-sm font-semibold text-gray-700 dark:text-neutral-300">
             {{ rotulo }}
             <span v-if="obrigatorio" class="text-red-700/80">*</span>
         </label>
@@ -12,14 +12,14 @@
                 :placeholder="placeholder"
                 :required="obrigatorio"
                 autocomplete="new-password"
-                class="w-full rounded-lg border border-gray-200 bg-white px-3.5 py-3 pr-10 font-[inherit] text-sm text-gray-900 transition-all duration-200 placeholder:text-gray-400 focus:border-slate-500 focus:outline-none focus:ring-[3px] focus:ring-slate-500/10 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:border-slate-400"
+                class="w-full rounded-lg border border-gray-200 bg-white px-3.5 py-3 pr-10 font-[inherit] text-sm text-gray-900 transition-all duration-200 placeholder:text-gray-400 focus:border-neutral-500 focus:outline-none focus:ring-[3px] focus:ring-neutral-500/10 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-100 dark:placeholder:text-neutral-500 dark:focus:border-neutral-400"
                 @input="$emit('update:modelValue', $event.target.value)"
             />
             <button
                 type="button"
                 tabindex="-1"
                 :aria-label="visivel ? 'Ocultar senha' : 'Mostrar senha'"
-                class="absolute right-3 top-1/2 z-10 flex -translate-y-1/2 cursor-pointer items-center justify-center border-none bg-transparent p-0 text-gray-400 transition-colors duration-200 hover:text-gray-600 dark:text-slate-500 dark:hover:text-slate-300"
+                class="absolute right-3 top-1/2 z-10 flex -translate-y-1/2 cursor-pointer items-center justify-center border-none bg-transparent p-0 text-gray-400 transition-colors duration-200 hover:text-gray-600 dark:text-neutral-500 dark:hover:text-neutral-300"
                 @click="visivel = !visivel"
             >
                 <svg
