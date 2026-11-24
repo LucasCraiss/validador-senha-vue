@@ -1,6 +1,6 @@
 <template>
-    <div class="rounded-lg border border-gray-200 bg-gray-50 p-4">
-        <p class="mb-2 text-xs font-semibold text-gray-700">Requisitos da senha:</p>
+    <div class="rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-slate-700 dark:bg-slate-800/50">
+        <p class="mb-2 text-xs font-semibold text-gray-700 dark:text-slate-300">Requisitos da senha:</p>
         <ul class="space-y-1.5">
             <li
                 v-for="(requisito, index) in requisitos"
@@ -11,7 +11,7 @@
                 <!-- check -->
                 <svg
                     v-if="requisito.cumprido"
-                    class="mr-2 h-4 w-4 shrink-0 text-green-600"
+                    class="mr-2 h-4 w-4 shrink-0 text-green-600 dark:text-green-400"
                     viewBox="0 0 20 20"
                     fill="currentColor"
                     aria-hidden="true"
@@ -26,7 +26,7 @@
                 <svg
                     v-else
                     class="mr-2 h-4 w-4 shrink-0"
-                    :class="requisito.divergente ? 'text-red-700/70' : 'text-gray-400'"
+                    :class="requisito.divergente ? 'text-red-700/70 dark:text-red-400/80' : 'text-gray-400 dark:text-slate-500'"
                     viewBox="0 0 20 20"
                     fill="currentColor"
                     aria-hidden="true"
@@ -118,8 +118,8 @@ function estadoDe(requisito) {
  * @returns {string}
  */
 function classeTexto(requisito) {
-    if (requisito.cumprido) return 'text-green-700 font-medium';
-    if (requisito.divergente) return 'text-red-700/80 font-medium';
-    return 'text-gray-600';
+    if (requisito.cumprido) return 'text-green-700 font-medium dark:text-green-400';
+    if (requisito.divergente) return 'text-red-700/80 font-medium dark:text-red-400';
+    return 'text-gray-600 dark:text-slate-400';
 }
 </script>

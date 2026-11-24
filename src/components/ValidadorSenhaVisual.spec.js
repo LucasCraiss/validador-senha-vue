@@ -47,6 +47,16 @@ describe('ValidadorSenhaVisual.vue', () => {
         expect(estados(wrapper).at(-1)).toBe('cumprido');
     });
 
+    it('declara variantes de tema escuro em todos os estados', () => {
+        // Guarda contra um refactor de classes deixar o tema escuro para trás.
+        const wrapper = mount(ValidadorSenhaVisual, { props: { senha: 'senha123', confirmacao: '' } });
+        const html = wrapper.html();
+        expect(html).toContain('dark:bg-slate-800/50');
+        expect(html).toContain('dark:text-green-400');
+        expect(html).toContain('dark:text-red-400');
+        expect(html).toContain('dark:text-slate-400');
+    });
+
     it('reage à mudança da prop', async () => {
         const wrapper = mount(ValidadorSenhaVisual, { props: { senha: 'abc' } });
         expect(estados(wrapper)[1]).toBe('divergente');

@@ -3,9 +3,13 @@
 Componente de requisitos de senha com feedback em tempo real: a cada tecla, cada
 requisito mostra se está **pendente**, **contrariado** ou **atendido**.
 
-| Estado inicial | Durante a digitação |
+| Tema claro | Tema escuro |
 | --- | --- |
-| ![formulário com os requisitos ainda pendentes, em cinza](docs/estado-inicial.jpg) | ![formulário com requisitos atendidos em verde e contrariados em vermelho](docs/em-digitacao.jpg) |
+| ![formulário no tema claro com requisitos em verde, vermelho e cinza](docs/tema-claro.jpg) | ![o mesmo formulário no tema escuro](docs/tema-escuro.jpg) |
+
+Nos dois prints a senha digitada é `senha123`: tamanho e número atendidos (verde),
+maiúscula e caractere especial contrariados (vermelho), confirmação ainda em
+branco e portanto pendente (cinza).
 
 ## A ideia
 
@@ -78,12 +82,42 @@ obterMensagemRequisitos();       // mensagem única com todos os requisitos
 - `validarSenhaForte(senha)` → lista de mensagens, para exibir erros agregados.
 - `obterMensagemRequisitos()` → texto único, para tooltip ou erro vindo da API.
 
+## Tema claro e escuro
+
+O componente traz variantes `dark:` do Tailwind e é **dirigido por classe**, não
+por `prefers-color-scheme`: quem usa decide quando ativar. Basta haver `.dark` em
+um ancestral — normalmente o `<html>`:
+
+```js
+document.documentElement.classList.toggle('dark', true);
+```
+
+A variante é declarada uma única vez, em [`src/estilo.css`](src/estilo.css):
+
+```css
+@custom-variant dark (&:where(.dark, .dark *));
+```
+
+A demo usa o composable [`useTema`](src/composaveis/useTema.js), que segue o
+sistema operacional na primeira visita e depois respeita a escolha manual,
+guardada em `localStorage`:
+
+```js
+import { useTema } from './composaveis/useTema.js';
+
+const { escuro, alternar } = useTema();
+```
+
+Se o seu projeto prefere seguir só o sistema operacional, troque a linha do
+`@custom-variant` por `@custom-variant dark (@media (prefers-color-scheme: dark));`
+e descarte o composable — o componente não muda.
+
 ## Rodando o projeto
 
 ```bash
 npm install
 npm run dev     # demo em http://localhost:5173
-npm test        # 22 testes (Vitest + @vue/test-utils)
+npm test        # 23 testes (Vitest + @vue/test-utils)
 npm run build
 ```
 
@@ -91,11 +125,14 @@ npm run build
 
 ```
 src/
-├── App.vue                            # demo: dois campos + validador + submit controlado
+├── App.vue                            # demo: dois campos + validador + botão de tema
+├── estilo.css                         # Tailwind + a variante `dark`
 ├── components/
 │   ├── CampoSenha.vue                 # input de senha com botão mostrar/ocultar
 │   ├── ValidadorSenhaVisual.vue       # o componente
-│   └── ValidadorSenhaVisual.spec.js   # 9 testes de renderização e estados
+│   └── ValidadorSenhaVisual.spec.js   # 10 testes de renderização, estados e tema
+├── composaveis/
+│   └── useTema.js                     # tema claro/escuro com persistência
 └── utilitarios/
     ├── senhaValidacao.js              # as regras
     └── senhaValidacao.spec.js         # 13 testes das regras
@@ -103,8 +140,8 @@ src/
 
 ## Stack
 
-Vue 3 (`<script setup>`), Tailwind CSS v4, Vite, Vitest. Sem dependência de
-biblioteca de ícones — os SVGs são inline.
+Vue 3 (`<script setup>`), Tailwind CSS v4, Vite, Vitest. Nenhuma dependência de
+runtime além do Vue — os SVGs são inline, sem biblioteca de ícones.
 
 ## Nota
 

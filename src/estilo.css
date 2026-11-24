@@ -1,5 +1,13 @@
 @import 'tailwindcss';
 
+/*
+ * Tema escuro dirigido por classe, não por `prefers-color-scheme`: quem usa o
+ * componente decide quando ativar, bastando ter `.dark` em um ancestral
+ * (normalmente o <html>). A demo liga isso ao sistema operacional na primeira
+ * visita — veja src/composaveis/useTema.js.
+ */
+@custom-variant dark (&:where(.dark, .dark *));
+
 body {
     margin: 0;
     font-family:
